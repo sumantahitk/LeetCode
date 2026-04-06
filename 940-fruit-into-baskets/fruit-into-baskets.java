@@ -6,14 +6,9 @@ class Solution {
         Map <Integer,Integer> arr=new HashMap<>();
         
         while(h<n){
-           if(!arr.containsKey(f[h])){
-            arr.put(f[h],1);
-            k++;
-           }else{
-            arr.put(f[h],arr.get(f[h])+1);
-           }
+           arr.put(f[h],arr.getOrDefault(f[h],0)+1);
             
-            while(k>2){
+            while(arr.size()>2){
                 arr.put(f[l],arr.get(f[l])-1);
                 if(arr.get(f[l])==0){
                     k--;

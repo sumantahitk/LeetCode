@@ -17,9 +17,26 @@ public:
         m1(root->left,ans);
         m1(root->right,ans);
     }
+    void m2(TreeNode* root,vector<int>&ans) {
+        if(!root) return ;
+       stack<TreeNode*>st;
+       st.push(root);
+       while(!st.empty()){
+            TreeNode* node=st.top();
+            ans.push_back(st.top()->val);
+            st.pop();
+            if(node->right){
+                st.push(node->right);
+            }
+            if(node->left){
+                st.push(node->left);
+            }
+       }
+       return ;
+    }
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int>ans;
-        m1(root,ans);
+        m2(root,ans);
         return ans;
     }
 };

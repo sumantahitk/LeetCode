@@ -14,9 +14,9 @@ void dfs(int i,vector<bool>&vis,vector<vector<int>>&adj){
         vector<vector<int>>adj(n);
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if(i!=j && arr[i][j]==1){
+                if(arr[i][j]==1){
                     adj[i].push_back(j);
-                    adj[j].push_back(i);
+                    // adj[j].push_back(i);
                 }
             }
         }

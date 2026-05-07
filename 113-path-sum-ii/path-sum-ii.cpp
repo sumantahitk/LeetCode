@@ -23,9 +23,7 @@ bool find(TreeNode* root, int tar,int sum,vector<vector<int>>&ans ,vector<int>&a
                 return 1;
                 
             }
-            // return 0;
-            
-            
+           
         }
         
         int l=find(root->left,tar,sum,ans,a);
@@ -39,10 +37,26 @@ bool find(TreeNode* root, int tar,int sum,vector<vector<int>>&ans ,vector<int>&a
             return 0;
         }
     }
+     void dfs(TreeNode* root, int targetSum, vector<int>& path, vector<vector<int>>& ans) {
+        if (!root) return;
+
+        path.push_back(root->val);
+
+        // Leaf node
+        if (!root->left && !root->right && targetSum == root->val) {
+            ans.push_back(path);
+        }
+
+        dfs(root->left, targetSum - root->val, path, ans);
+        dfs(root->right, targetSum - root->val, path, ans);
+
+        path.pop_back(); // backtrack
+    }
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>>ans;
         vector<int>a;
-        find(root,targetSum,0,ans,a);
+        // find(root,targetSum,0,ans,a);
+        dfs(root,targetSum,a,ans);
         return ans;
     }
 };

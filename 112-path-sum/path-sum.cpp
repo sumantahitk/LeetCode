@@ -29,9 +29,22 @@ public:
             return 0;
         }
     }
+      bool m1(TreeNode* root, int targetSum) {
+       return find(root,targetSum,0);
+    }
+      bool m2(TreeNode* root, int targetSum) {
+        if (!root) return false;
+
+        // If leaf node, check remaining sum
+        if (!root->left && !root->right) {
+            return targetSum == root->val;
+        }
+
+        // Reduce target and recurse
+        return m2(root->left, targetSum - root->val) ||
+               m2(root->right, targetSum - root->val);
+    }
     bool hasPathSum(TreeNode* root, int tar) {
-        int sum=0;
-        return find(root,tar,sum);
-        // return 0;
+       return m2(root,tar);
     }
 };

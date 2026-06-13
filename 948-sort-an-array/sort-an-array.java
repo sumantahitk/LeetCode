@@ -85,9 +85,40 @@ class Solution {
        
         return arr;
     }
+    void heapify(int i,int[] arr,int n){
+        
+        while(true){
+            int largest=i;
+            int left=2*i+1,right=2*i+2;
+            if(left<n && arr[left]>arr[largest])
+                largest=left;
+            if(right<n && arr[right]>arr[largest])
+                largest=right;
+            
+            if(i==largest) break;
+
+            int temp=arr[largest];
+            arr[largest]=arr[i];
+            arr[i]=temp;
+            i=largest;
+        }
+    }
+    void heapsort(int [] arr,int n){
+        // Build Max Heap
+        for(int i=n/2-1;i>=0;i--){
+            heapify(i,arr,n);
+        }
+
+        for(int i=n-1;i>=0;i--){
+            int temp=arr[i];
+            arr[i]=arr[0];
+            arr[0]=temp;
+            heapify(0,arr,i);
+        }
+    }
     public int[] heap(int[] arr) {
         int n=arr.length;
-       
+       heapsort(arr,n);
         return arr;
     }
     void margearr(int l,int m,int h,int[] arr){
@@ -132,6 +163,7 @@ class Solution {
         // return selection(arr);
         // return insertion(arr);
         // return quick(arr);
-        return marge(arr);
+        // return marge(arr);
+        return heap(arr);
     }
 }

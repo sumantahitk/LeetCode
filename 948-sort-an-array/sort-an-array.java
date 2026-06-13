@@ -90,15 +90,48 @@ class Solution {
        
         return arr;
     }
+    void margearr(int l,int m,int h,int[] arr){
+        int a[]=new int[m-l+1];
+        int b[]=new int[h-m];
+        int ans[]=new int[h-l+1];
+        int i=l,j=m+1;
+        int p=0,k=0;
+        while(i<=m && j<=h){
+            if(arr[i]<arr[j]){
+                ans[p++]=arr[i++];
+            }else{
+                ans[p++]=arr[j++];
+            }
+        }
+        while(i<=m){
+             ans[p++]=arr[i++];
+        }
+        while(j<=h){
+            ans[p++]=arr[j++];
+        }
+        int e=0;
+        for(int c=0;c<ans.length;c++){
+            arr[c+l]=ans[c];
+        }
+    }
+    void margesort(int l,int h,int[]arr){
+        if(l>=h) return;
+
+        int mid=(l+h)/2;
+        margesort(l,mid,arr);
+        margesort(mid+1,h,arr);
+        margearr(l,mid,h,arr);
+    }
     public int[] marge(int[] arr) {
         int n=arr.length;
-       
+       margesort(0,n-1,arr);
         return arr;
     }
     public int[] sortArray(int[] arr) {
     // return bubble(arr);
         // return selection(arr);
         // return insertion(arr);
-        return quick(arr);
+        // return quick(arr);
+        return marge(arr);
     }
 }

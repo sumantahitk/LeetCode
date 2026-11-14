@@ -1,50 +1,22 @@
-import java.util.Arrays;
-
 class Solution {
-
-    int solve(int[] prices, int buy,
-              int i, int[][][] dp,
-              int k) {
-
-        if(i == prices.length || k == 0)
-            return 0;
-
-        if(dp[i][buy][k] != -1)
-            return dp[i][buy][k];
-
-        int ans;
-
-        if(buy == 1) {
-
-            ans = Math.max(
-                    -prices[i] + solve(prices, 0, i + 1, dp, k),
-                    solve(prices, 1, i + 1, dp, k)
-                  );
-
-        } else {
-
-            ans = Math.max(
-                    prices[i] + solve(prices, 1, i + 1, dp, k - 1),
-                    solve(prices, 0, i + 1, dp, k)
-                  );
+     int find(int buy,int n,int m,int k,int[] p,int [][][]dp){
+        if(k==0 || n==m) return 0;
+        if(dp[n][buy][k]!=-1) return dp[n][buy][k];
+        if(buy==1){
+            dp[n][buy][k]=Math.max(-p[n]+find(0,n+1,m,k,p,dp),find(1,n+1,m,k,p,dp));
+        } else{
+            dp[n][buy][k]=Math.max(p[n]+find(1,n+1,m,k-1,p,dp),find(0,n+1,m,k,p,dp));
         }
-
-        return dp[i][buy][k] = ans;
+        return dp[n][buy][k];
     }
-
-    public int maxProfit(int[] prices) {
-
-        int n = prices.length;
-        int k = 2;
-
-        int[][][] dp = new int[n][2][k + 1];
-
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < 2; j++) {
-                Arrays.fill(dp[i][j], -1);
-            }
+    public int maxProfit(int[] p) {
+         int n=p.length,k=2;
+       int [][][]dp=new int[n+1][2][k+1];
+       for(int [][]r:dp){
+        for(int []a:r){
+            Arrays.fill(a,-1);
         }
-
-        return solve(prices, 1, 0, dp, k);
+       }
+        return find(1,0,n,k,p,dp);
     }
 }

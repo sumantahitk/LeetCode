@@ -1,22 +1,17 @@
 class Solution {
     public int firstUniqChar(String s) {
-        Map<Character, Integer> mp = new LinkedHashMap<>();
+        int[] freq = new int[26];
 
-        for(char c : s.toCharArray()) {
-            mp.put(c, mp.getOrDefault(c, 0) + 1);
+        // Step 1: Calculate frequency
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++;
         }
 
-        char ch = '#';
-
-        for(Character key : mp.keySet()) {
-            if(mp.get(key) == 1) {
-                ch = key;
-                break;
+        // Step 2: Find first non-repeating character
+        for (int i = 0; i < s.length(); i++) {
+            if (freq[s.charAt(i) - 'a'] == 1) {
+                return i;
             }
-        }
-
-        for(int i = 0; i < s.length(); i++) {
-            if(s.charAt(i) == ch) return i;
         }
 
         return -1;
